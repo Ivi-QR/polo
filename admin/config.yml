@@ -1,0 +1,49 @@
+backend:
+  name: github
+  repo: Ivi-QR/polo
+  branch: main
+
+media_folder: "images"
+
+collections:
+  - name: "tartalom"
+    label: "Póló Tartalom"
+    files:
+      - file: "content.json"
+        label: "Póló Oldal Blokkjai"
+        name: "info"
+        fields:
+          - label: "Oldal elemei (szabadon rendezhető)"
+            name: "elemek"
+            widget: "list"
+            types:
+              - label: "Szöveg (WYSIWYG)"
+                name: "szoveg_blokk"
+                widget: "object"
+                fields:
+                  - {label: "Formázott Szöveg", name: "tartalom", widget: "markdown"}
+
+              - label: "Kép vagy GIF"
+                name: "kep_blokk"
+                widget: "object"
+                fields:
+                  - {label: "Kép feltöltése", name: "kep", widget: "image"}
+                  - {label: "Kép alatti leírás (opcionális)", name: "alt", widget: "string", required: false}
+
+              - label: "Videó (YouTube / Vimeo link)"
+                name: "video_blokk"
+                widget: "object"
+                fields:
+                  - {label: "Videó URL (pl. https://www.youtube.com/watch?v=...)", name: "url", widget: "string"}
+
+              - label: "Sorköz / Üres tér"
+                name: "urom_blokk"
+                widget: "object"
+                fields:
+                  - label: "Térköz nagysága"
+                    name: "meret"
+                    widget: "select"
+                    options:
+                      - {label: "Kicsi (20px)", value: "20px"}
+                      - {label: "Közepes (50px)", value: "50px"}
+                      - {label: "Nagy (100px)", value: "100px"}
