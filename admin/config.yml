@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: Ivi-QR/polo
   branch: main
 
 media_folder: "images"
