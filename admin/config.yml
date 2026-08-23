@@ -9,37 +9,55 @@ collections:
     label: "Póló Tartalom"
     files:
       - file: "content.json"
-        label: "Póló Oldal Blokkjai"
+        label: "Póló Oldal Beállításai"
         name: "info"
         fields:
+          - label: "Oldal háttérszíne"
+            name: "hatterszin"
+            widget: "color"
+            default: "#ffffff"
+
+          - label: "Betűtípus (pl. Arial, 'Courier New', vagy Google Font neve)"
+            name: "betutipus"
+            widget: "string"
+            default: "sans-serif"
+
           - label: "Oldal elemei (szabadon rendezhető)"
             name: "elemek"
             widget: "list"
             types:
-              - label: "Szöveg (WYSIWYG)"
+              - label: "Szövegblokk"
                 name: "szoveg_blokk"
                 widget: "object"
                 fields:
-                  - {label: "Formázott Szöveg", name: "tartalom", widget: "markdown"}
+                  - { label: "Szöveg", name: "tartalom", widget: "markdown" }
+                  - label: "Szöveg mérete (pl. 18px, 1.5rem, 2rem)"
+                    name: "meret"
+                    widget: "string"
+                    default: "16px"
+                  - label: "Szöveg színe"
+                    name: "szinszin"
+                    widget: "color"
+                    default: "#000000"
+
               - label: "Kép vagy GIF"
                 name: "kep_blokk"
                 widget: "object"
                 fields:
-                  - {label: "Kép feltöltése", name: "kep", widget: "image"}
-                  - {label: "Kép alatti leírás", name: "alt", widget: "string", required: false}
+                  - { label: "Kép feltöltése", name: "kep", widget: "image" }
+                  - { label: "Kép alatti leírás", name: "alt", widget: "string", required: false }
+
               - label: "Videó (YouTube link)"
                 name: "video_blokk"
                 widget: "object"
                 fields:
-                  - {label: "Videó URL", name: "url", widget: "string"}
-              - label: "Sorköz / Üres tér"
+                  - { label: "Videó URL", name: "url", widget: "string" }
+
+              - label: "Sorköz / Üres tér (pl. 40px, vagy 3rem)"
                 name: "urom_blokk"
                 widget: "object"
                 fields:
                   - label: "Térköz nagysága"
                     name: "meret"
-                    widget: "select"
-                    options:
-                      - {label: "Kicsi (20px)", value: "20px"}
-                      - {label: "Közepes (50px)", value: "50px"}
-                      - {label: "Nagy (100px)", value: "100px"}
+                    widget: "string"
+                    default: "20px"
