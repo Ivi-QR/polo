@@ -1,70 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="hu">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Póló QR</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Markdown megjelenítő a szép formázott szövegekhez -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Dinamikus Google Font betöltő, hogy minden kiválasztott betű azonnal működjön -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="google-fonts-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: 0;
+      padding: 40px 20px;
       text-align: center;
-      color: #333;
+      transition: background-color 0.3s ease;
     }
-    img { max-width: 100%; height: auto; border-radius: 8px; }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
-    .video-container iframe { position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0; }
   </style>
 </head>
-<body>
+<body id="oldal-test">
 
-  <div id="app">Töltés...</div>
+  <div id="tartalom-tarolo">Töltés...</div>
 
   <script>
-    fetch('/content.json')
-      .then(res => res.json())
+    fetch('content.json')
+      .then(response => response.json())
       .then(data => {
-        const app = document.getElementById('app');
-        app.innerHTML = ''; // Alaphelyzetbe állítás
+        const body = document.getElementById('oldal-test');
+        
+        // Háttérszín beállítása
+        if (data.hatterszin) {
+          body.style.backgroundColor = data.hatterszin;
+        }
 
-        if (!data.elemek) return;
-
-        data.elemek.forEach(item => {
-          const div = document.createElement('div');
-
-          // 1. WYSIWYG Szöveg blokk
-          if (item.type === 'szoveg_blokk') {
-            div.innerHTML = marked.parse(item.tartalom || '');
-          } 
-          // 2. Kép / GIF blokk
-          else if (item.type === 'kep_blokk') {
-            div.innerHTML = `<img src="${item.kep}" alt="${item.alt || ''}">`;
-          } 
-          // 3. Videó blokk (YouTube automatikus átalakítás)
-          else if (item.type === 'video_blokk') {
-            let embedUrl = item.url;
-            if (item.url.includes('youtube.com/watch?v=')) {
-              embedUrl = item.url.replace('watch?v=', 'embed/');
-            } else if (item.url.includes('youtu.be/')) {
-              embedUrl = item.url.replace('youtu.be/', 'youtube.com/embed/');
-            }
-            div.innerHTML = `<div class="video-container"><iframe src="${embedUrl}" allowfullscreen></iframe></div>`;
-          } 
-          // 4. Üres szeparátor
-          else if (item.type === 'urom_blokk') {
-            div.style.height = item.meret || '30px';
+        // Betűtípus és a hozzá tartozó Google Font dinamikus betöltése
+        if (data.betutipus) {
+          body.style.fontFamily = data.betutipus;
+          const fontName = data.betutipus.split(',')[0].trim().replace(/['"]/g, '');
+          // Ha nem egyezik a sima alaprendszerekkel, behúzzuk Google Fontként
+          if (!['sans-serif', 'serif', 'monospace', 'cursive', 'Courier New'].includes(fontName)) {
+            const fontLink = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}:wght@400;600;700&display=swap`;
+            document.getElementById('google-fonts-link').href = fontLink;
           }
+        }
 
-          app.appendChild(div);
-        });
+        const tarolo = document.getElementById('tartalom-tarolo');
+        tarolo.innerHTML = '';
+
+        if (data.elemek && Array.isArray(data.elemek)) {
+          data.elemek.forEach(elem => {
+            if (elem.type === 'szoveg_blokk') {
+              const div = document.createElement('div');
+              div.innerHTML = elem.tartalom || '';
+              // A megadott számértékhez automatikusan hozzáadjuk a px-et a böngészőnek
+              div.style.fontSize = (elem.meret ? elem.meret + 'px' : '16px');
+              div.style.color = elem.szinszin || '#000000';
+              div.style.margin = '15px 0';
+              tarolo.appendChild(div);
+            }
+            else if (elem.type === 'kep_blokk' && elem.kep) {
+              const img = document.createElement('img');
+              img.src = elem.kep;
+              img.alt = elem.alt || '';
+              img.style.maxWidth = '90%';
+              img.style.maxHeight = '400px';
+              img.style.borderRadius = '8px';
+              img.style.margin = '20px 0';
+              tarolo.appendChild(img);
+            }
+            else if (elem.type === 'video_blokk' && elem.url) {
+              let embedUrl = elem.url;
+              if (elem.url.includes('watch?v=')) {
+                embedUrl = elem.url.replace('watch?v=', 'embed/');
+              }
+              const iframe = document.createElement('iframe');
+              iframe.src = embedUrl;
+              iframe.width = '560';
+              iframe.height = '315';
+              iframe.style.maxWidth = '100%';
+              iframe.style.border = 'none';
+              iframe.style.borderRadius = '8px';
+              iframe.style.margin = '20px 0';
+              tarolo.appendChild(iframe);
+            }
+            else if (elem.type === 'urom_blokk') {
+              const spacer = document.createElement('div');
+              spacer.style.height = (elem.meret ? elem.meret + 'px' : '20px');
+              tarolo.appendChild(spacer);
+            }
+          });
+        }
       })
-      .catch(() => {
-        document.getElementById('app').innerText = 'Kattints a szerkesztőre a tartalom hozzáadásához!';
+      .catch(err => {
+        document.getElementById('tartalom-tarolo').innerText = 'Hiba történt a tartalom betöltése közben.';
+        console.error(err);
       });
   </script>
 </body>
