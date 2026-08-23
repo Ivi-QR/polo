@@ -2,6 +2,7 @@ backend:
   name: github
   repo: Ivi-QR/polo
   branch: main
+  auth_type: pkce
 
 media_folder: "images"
 
