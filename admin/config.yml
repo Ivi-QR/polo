@@ -2,7 +2,6 @@ backend:
   name: github
   repo: Ivi-QR/polo
   branch: main
-  base_url: https://decap-oauth.netlify.app
 
 media_folder: "images"
 editor:
