@@ -3,7 +3,6 @@ backend:
   repo: Ivi-QR/polo
   branch: main
 
-
 media_folder: "images"
 
 collections:
