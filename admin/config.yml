@@ -4,6 +4,10 @@ backend:
 
 media_folder: "images"
 
+# Ez kapcsolja be a szerkesztő melletti élő előnézetet (split-view)
+editor:
+  preview: true
+
 collections:
   - name: "tartalom"
     label: "Póló Tartalom"
@@ -17,10 +21,15 @@ collections:
             widget: "color"
             default: "#ffffff"
 
-          - label: "Betűtípus (pl. Arial, 'Courier New', vagy Google Font neve)"
+          - label: "Betűtípus"
             name: "betutipus"
-            widget: "string"
+            widget: "select"
             default: "sans-serif"
+            options:
+              - { label: "Modern / Sima (Sans-serif)", value: "sans-serif" }
+              - { label: "Talpas / Elegáns (Serif)", value: "serif" }
+              - { label: "Írógép / Tech (Monospace)", value: "monospace" }
+              - { label: "Kézírásos jellegű (Cursive)", value: "cursive" }
 
           - label: "Oldal elemei (szabadon rendezhető)"
             name: "elemek"
@@ -31,10 +40,15 @@ collections:
                 widget: "object"
                 fields:
                   - { label: "Szöveg", name: "tartalom", widget: "markdown" }
-                  - label: "Szöveg mérete (pl. 18px, 1.5rem, 2rem)"
+                  - label: "Szöveg mérete"
                     name: "meret"
-                    widget: "string"
+                    widget: "select"
                     default: "16px"
+                    options:
+                      - { label: "Kicsi", value: "14px" }
+                      - { label: "Normál", value: "16px" }
+                      - { label: "Nagyobb", value: "22px" }
+                      - { label: "Kiemelt / Óriás", value: "32px" }
                   - label: "Szöveg színe"
                     name: "szinszin"
                     widget: "color"
@@ -53,11 +67,15 @@ collections:
                 fields:
                   - { label: "Videó URL", name: "url", widget: "string" }
 
-              - label: "Sorköz / Üres tér (pl. 40px, vagy 3rem)"
+              - label: "Sorköz / Üres tér"
                 name: "urom_blokk"
                 widget: "object"
                 fields:
                   - label: "Térköz nagysága"
                     name: "meret"
-                    widget: "string"
+                    widget: "select"
                     default: "20px"
+                    options:
+                      - { label: "Kicsi térköz", value: "20px" }
+                      - { label: "Közepes térköz", value: "50px" }
+                      - { label: "Nagy térköz", value: "100px" }
