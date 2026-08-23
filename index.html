@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Póló QR</title>
-  <!-- Dinamikus Google Font betöltő, hogy minden kiválasztott betű azonnal működjön -->
+  <!-- Dinamikus Google Font betöltő -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link id="google-fonts-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  
+  <!-- Markdown feldolgozó könyvtár, hogy a # jelekből igazi címsorok legyenek -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -32,11 +36,10 @@
           body.style.backgroundColor = data.hatterszin;
         }
 
-        // Betűtípus és a hozzá tartozó Google Font dinamikus betöltése
+        // Betűtípus beállítása
         if (data.betutipus) {
           body.style.fontFamily = data.betutipus;
           const fontName = data.betutipus.split(',')[0].trim().replace(/['"]/g, '');
-          // Ha nem egyezik a sima alaprendszerekkel, behúzzuk Google Fontként
           if (!['sans-serif', 'serif', 'monospace', 'cursive', 'Courier New'].includes(fontName)) {
             const fontLink = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}:wght@400;600;700&display=swap`;
             document.getElementById('google-fonts-link').href = fontLink;
@@ -50,8 +53,10 @@
           data.elemek.forEach(elem => {
             if (elem.type === 'szoveg_blokk') {
               const div = document.createElement('div');
-              div.innerHTML = elem.tartalom || '';
-              // A megadott számértékhez automatikusan hozzáadjuk a px-et a böngészőnek
+              
+              // Itt alakítja át a marked.parse() a Markdown kódot igazi HTML-lé (# -> h1, stb.)
+              div.innerHTML = marked.parse(elem.tartalom || '');
+              
               div.style.fontSize = (elem.meret ? elem.meret + 'px' : '16px');
               div.style.color = elem.szinszin || '#000000';
               div.style.margin = '15px 0';
