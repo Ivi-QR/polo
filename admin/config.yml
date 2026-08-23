@@ -3,6 +3,107 @@ backend:
   branch: main
 
 media_folder: "images"
+editor:
+  preview: true
+
+collections:
+  - name: "tartalom"
+    label: "Póló Tartalom"
+    files:
+      - file: "content.json"
+        label: "Póló Oldal Beállításai"
+        name: "info"
+        fields:
+          - label: "Oldal háttérszíne"
+            name: "hatterszin"
+            widget: "color"
+            default: "#ffffff"
+
+          - label: "Betűtípus"
+            name: "betutipus"
+            widget: "select"
+            default: "Inter, sans-serif"
+            options:
+              - "Inter, sans-serif"
+              - "Roboto, sans-serif"
+              - "Open Sans, sans-serif"
+              - "Montserrat, sans-serif"
+              - "Poppins, sans-serif"
+              - "Lato, sans-serif"
+              - "Source Sans 3, sans-serif"
+              - "Raleway, sans-serif"
+              - "Nunito, sans-serif"
+              - "Ubuntu, sans-serif"
+              - "Playfair Display, serif"
+              - "Merriweather, serif"
+              - "Lora, serif"
+              - "Playfair, serif"
+              - "PT Serif, serif"
+              - "Cinzel, serif"
+              - "Cormorant Garamond, serif"
+              - "Bebas Neue, sans-serif"
+              - "Oswald, sans-serif"
+              - "Anton, sans-serif"
+              - "Fira Code, monospace"
+              - "JetBrains Mono, monospace"
+              - "Courier New, monospace"
+              - "Caveat, cursive"
+              - "Pacifico, cursive"
+              - "Dancing Script, cursive"
+              - "Great Vibes, cursive"
+              - "Sacramento, cursive"
+              - "Amatic SC, cursive"
+              - "Permanent Marker, cursive"
+
+          - label: "Oldal elemei (szabadon rendezhető)"
+            name: "elemek"
+            widget: "list"
+            types:
+              - label: "Szövegblokk"
+                name: "szoveg_blokk"
+                widget: "object"
+                fields:
+                  - { label: "Szöveg", name: "tartalom", widget: "markdown" }
+                  - label: "Szöveg mérete (8-60)"
+                    name: "meret"
+                    widget: "number"
+                    value_type: "int"
+                    min: 8
+                    max: 60
+                    default: 16
+                  - label: "Szöveg színe"
+                    name: "szinszin"
+                    widget: "color"
+                    default: "#000000"
+
+              - label: "Kép vagy GIF"
+                name: "kep_blokk"
+                widget: "object"
+                fields:
+                  - { label: "Kép feltöltése", name: "kep", widget: "image" }
+                  - { label: "Kép alatti leírás", name: "alt", widget: "string", required: false }
+
+              - label: "Videó (YouTube link)"
+                name: "video_blokk"
+                widget: "object"
+                fields:
+                  - { label: "Videó URL", name: "url", widget: "string" }
+
+              - label: "Sorköz / Üres tér"
+                name: "urom_blokk"
+                widget: "object"
+                fields:
+                  - label: "Térköz nagysága (pixelben)"
+                    name: "meret"
+                    widget: "number"
+                    value_type: "int"
+                    min: 5
+                    max: 200
+                    default: 20backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
 
 # Ez kapcsolja be a szerkesztő melletti élő előnézetet (split-view)
 editor:
