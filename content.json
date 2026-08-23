@@ -2,8 +2,8 @@
   "elemek": [
     {
       "type": "szoveg_blokk",
-      "tartalom": "# Fuck you.",
-      "meret": "18px",
+      "tartalom": "### Fuck you.",
+      "meret": 50,
       "szinszin": "#ffb5ee"
     },
     {
@@ -16,5 +16,5 @@
     }
   ],
   "hatterszin": "#02264e",
-  "betutipus": "Courier New"
+  "betutipus": "Sacramento, cursive"
 }
