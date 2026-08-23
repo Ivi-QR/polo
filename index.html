@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Póló QR</title>
+  
   <!-- Dinamikus Google Font betöltő -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link id="google-fonts-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
   
-  <!-- Markdown feldolgozó könyvtár, hogy a # jelekből igazi címsorok legyenek -->
+  <!-- Markdown feldolgozó könyvtár -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
@@ -23,7 +24,10 @@
 </head>
 <body id="oldal-test">
 
-  <div id="tartalom-tarolo">Töltés...</div>
+  <!-- A közös szülő komponens (wrapper div), ami egyben tartja és igazítja a tartalmat -->
+  <div id="fokontener" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div id="tartalom-tarolo">Töltés...</div>
+  </div>
 
   <script>
     fetch('content.json')
@@ -53,21 +57,19 @@
           data.elemek.forEach(elem => {
             if (elem.type === 'szoveg_blokk') {
               const div = document.createElement('div');
-              
-              // Itt alakítja át a marked.parse() a Markdown kódot igazi HTML-lé (# -> h1, stb.)
               div.innerHTML = marked.parse(elem.tartalom || '');
-              
               div.style.fontSize = (elem.meret ? elem.meret + 'px' : '16px');
               div.style.color = elem.szinszin || '#000000';
-              div.style.margin = '15px 0';
+              div.style.textAlign = elem.igazitas || 'center';
+              div.style.margin = '20px 0';
               tarolo.appendChild(div);
             }
             else if (elem.type === 'kep_blokk' && elem.kep) {
               const img = document.createElement('img');
               img.src = elem.kep;
               img.alt = elem.alt || '';
-              img.style.maxWidth = '90%';
-              img.style.maxHeight = '400px';
+              img.style.width = '100%';
+              img.style.maxWidth = '100%';
               img.style.borderRadius = '8px';
               img.style.margin = '20px 0';
               tarolo.appendChild(img);
@@ -81,7 +83,7 @@
               iframe.src = embedUrl;
               iframe.width = '560';
               iframe.height = '315';
-              iframe.style.maxWidth = '100%';
+              iframe.style.width = '100%';
               iframe.style.border = 'none';
               iframe.style.borderRadius = '8px';
               iframe.style.margin = '20px 0';
