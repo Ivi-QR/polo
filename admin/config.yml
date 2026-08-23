@@ -22,20 +22,17 @@ collections:
                 widget: "object"
                 fields:
                   - {label: "Formázott Szöveg", name: "tartalom", widget: "markdown"}
-
               - label: "Kép vagy GIF"
                 name: "kep_blokk"
                 widget: "object"
                 fields:
                   - {label: "Kép feltöltése", name: "kep", widget: "image"}
-                  - {label: "Kép alatti leírás (opcionális)", name: "alt", widget: "string", required: false}
-
-              - label: "Videó (YouTube / Vimeo link)"
+                  - {label: "Kép alatti leírás", name: "alt", widget: "string", required: false}
+              - label: "Videó (YouTube link)"
                 name: "video_blokk"
                 widget: "object"
                 fields:
-                  - {label: "Videó URL (pl. https://www.youtube.com/watch?v=...)", name: "url", widget: "string"}
-
+                  - {label: "Videó URL", name: "url", widget: "string"}
               - label: "Sorköz / Üres tér"
                 name: "urom_blokk"
                 widget: "object"
