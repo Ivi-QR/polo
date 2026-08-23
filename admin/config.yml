@@ -64,10 +64,34 @@ collections:
                 widget: "object"
                 fields:
                   - { label: "Szöveg", name: "tartalom", widget: "markdown" }
-                  - label: "Szöveg mérete (8-60)", name: "meret", widget: "number", value_type: "int", min: 8, max: 60, default: 16
-                  - label: "Sorköz (pl. 1.2, 1.5, 2.0)", name: "sorkoz", widget: "number", value_type: "float", min: 1.0, max: 3.0, default: 1.5, step: 0.1, required: false }
-                  - label: "Szöveg színe", name: "szinszin", widget: "color", default: "#000000"
-                  - label: "Szöveg igazítása", name: "igazitas", widget: "select", default: "center", options: [{ label: "Középre", value: "center" }, { label: "Balra", value: "left" }, { label: "Jobbra", value: "right" }]
+                  - label: "Szöveg mérete (8-60)"
+                    name: "meret"
+                    widget: "number"
+                    value_type: "int"
+                    min: 8
+                    max: 60
+                    default: 16
+                  - label: "Sorköz (pl. 1.2, 1.5, 2.0)"
+                    name: "sorkoz"
+                    widget: "number"
+                    value_type: "float"
+                    min: 1.0
+                    max: 3.0
+                    default: 1.5
+                    step: 0.1
+                    required: false
+                  - label: "Szöveg színe"
+                    name: "szinszin"
+                    widget: "color"
+                    default: "#000000"
+                  - label: "Szöveg igazítása"
+                    name: "igazitas"
+                    widget: "select"
+                    default: "center"
+                    options:
+                      - { label: "Középre", value: "center" }
+                      - { label: "Balra", value: "left" }
+                      - { label: "Jobbra", value: "right" }
 
               - label: "Kép vagy GIF"
                 name: "kep_blokk"
