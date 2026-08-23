@@ -7,10 +7,6 @@
       "szinszin": "#ffb5ee"
     },
     {
-      "type": "urom_blokk",
-      "meret": "20px"
-    },
-    {
       "type": "kep_blokk",
       "kep": "/images/3dgifmaker16730.gif"
     }
