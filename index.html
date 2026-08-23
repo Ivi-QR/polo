@@ -3,9 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Póló QR</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body style="text-align: center; font-family: sans-serif; padding-top: 50px;">
-  <h1>Szia! Ez a pólóm üzenete!</h1>
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW4yc3R4Z3R5cmg3c3Zzb3p2N3Rpa2hnc3B3ZTF0czZweXByOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlQXkh1wx1RjtUA/giphy.gif" alt="GIF" style="max-width: 90%;">
+  <h1 id="szoveg">Töltés...</h1>
+  <img id="kep" src="" alt="GIF" style="max-width: 90%;">
+
+  <script>
+    // Ez a kis kód automatikusan beolvassa a Decap CMS-ből elmentett adatokat
+    fetch('/content.json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('szoveg').innerText = data.szoveg;
+        document.getElementById('kep').src = data.kep;
+      });
+  </script>
 </body>
 </html>
