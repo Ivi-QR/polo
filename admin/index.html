@@ -1,71 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Póló QR</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Póló Szerkesztő</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Markdown megjelenítő a szép formázott szövegekhez -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 20px;
-      text-align: center;
-      color: #333;
-    }
-    img { max-width: 100%; height: auto; border-radius: 8px; }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; }
-    .video-container iframe { position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0; }
-  </style>
 </head>
 <body>
-
-  <div id="app">Töltés...</div>
-
-  <script>
-    fetch('/content.json')
-      .then(res => res.json())
-      .then(data => {
-        const app = document.getElementById('app');
-        app.innerHTML = ''; // Alaphelyzetbe állítás
-
-        if (!data.elemek) return;
-
-        data.elemek.forEach(item => {
-          const div = document.createElement('div');
-
-          // 1. WYSIWYG Szöveg blokk
-          if (item.type === 'szoveg_blokk') {
-            div.innerHTML = marked.parse(item.tartalom || '');
-          } 
-          // 2. Kép / GIF blokk
-          else if (item.type === 'kep_blokk') {
-            div.innerHTML = `<img src="${item.kep}" alt="${item.alt || ''}">`;
-          } 
-          // 3. Videó blokk (YouTube automatikus átalakítás)
-          else if (item.type === 'video_blokk') {
-            let embedUrl = item.url;
-            if (item.url.includes('youtube.com/watch?v=')) {
-              embedUrl = item.url.replace('watch?v=', 'embed/');
-            } else if (item.url.includes('youtu.be/')) {
-              embedUrl = item.url.replace('youtu.be/', 'youtube.com/embed/');
-            }
-            div.innerHTML = `<div class="video-container"><iframe src="${embedUrl}" allowfullscreen></iframe></div>`;
-          } 
-          // 4. Üres szeparátor
-          else if (item.type === 'urom_blokk') {
-            div.style.height = item.meret || '30px';
-          }
-
-          app.appendChild(div);
-        });
-      })
-      .catch(() => {
-        document.getElementById('app').innerText = 'Kattints a szerkesztőre a tartalom hozzáadásához!';
-      });
-  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
