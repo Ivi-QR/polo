@@ -2,7 +2,9 @@
   "elemek": [
     {
       "type": "szoveg_blokk",
-      "tartalom": "# Fuck you."
+      "tartalom": "# Fuck you.",
+      "meret": "18px",
+      "szinszin": "#ffb5ee"
     },
     {
       "type": "urom_blokk",
@@ -12,5 +14,7 @@
       "type": "kep_blokk",
       "kep": "/images/3dgifmaker16730.gif"
     }
-  ]
+  ],
+  "hatterszin": "#02264e",
+  "betutipus": "Courier New"
 }
