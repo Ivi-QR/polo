@@ -4,7 +4,9 @@
       "type": "szoveg_blokk",
       "tartalom": "# Fuck you.",
       "meret": 50,
-      "szinszin": "#ffb5ee"
+      "szinszin": "#ffb5ee",
+      "sorkoz": 1.2,
+      "igazitas": "center"
     },
     {
       "type": "kep_blokk",
