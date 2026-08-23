@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Póló QR</title>
   
-  <!-- Dinamikus Google Font betöltő -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link id="google-fonts-link" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
   
-  <!-- Markdown feldolgozó könyvtár -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
     body {
       margin: 0;
-      padding: 10px 20px;
+      /* Itt vettük sokkal kisebbre a fenti/alsó belső margót, hogy ne legyen üresen lent-fent */
+      padding: 10px 15px; 
       text-align: center;
       transition: background-color 0.3s ease;
     }
@@ -24,8 +23,7 @@
 </head>
 <body id="oldal-test">
 
-  <!-- A közös szülő komponens (wrapper div), ami egyben tartja és igazítja a tartalmat -->
-  <div id="fokontener" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div id="fokontener" style="max-width: 600px; width: 100%; margin: 0 auto; padding: 10px; box-sizing: border-box;">
     <div id="tartalom-tarolo">Töltés...</div>
   </div>
 
@@ -34,13 +32,8 @@
       .then(response => response.json())
       .then(data => {
         const body = document.getElementById('oldal-test');
-        
-        // Háttérszín beállítása
-        if (data.hatterszin) {
-          body.style.backgroundColor = data.hatterszin;
-        }
+        if (data.hatterszin) body.style.backgroundColor = data.hatterszin;
 
-        // Betűtípus beállítása
         if (data.betutipus) {
           body.style.fontFamily = data.betutipus;
           const fontName = data.betutipus.split(',')[0].trim().replace(/['"]/g, '');
@@ -59,9 +52,11 @@
               const div = document.createElement('div');
               div.innerHTML = marked.parse(elem.tartalom || '');
               div.style.fontSize = (elem.meret ? elem.meret + 'px' : '16px');
+              div.style.lineHeight = (elem.sorkoz ? elem.sorkoz : '1.5'); // Sorköz kezelése
               div.style.color = elem.szinszin || '#000000';
               div.style.textAlign = elem.igazitas || 'center';
-              div.style.margin = '20px 0';
+              // Kisebb térköz az elemek között (10px helyett a korábbi 20px helyett)
+              div.style.margin = '10px 0'; 
               tarolo.appendChild(div);
             }
             else if (elem.type === 'kep_blokk' && elem.kep) {
@@ -71,7 +66,7 @@
               img.style.width = '100%';
               img.style.maxWidth = '100%';
               img.style.borderRadius = '8px';
-              img.style.margin = '20px 0';
+              img.style.margin = '10px 0'; // Kép alatti/feletti hely minimalizálása
               tarolo.appendChild(img);
             }
             else if (elem.type === 'video_blokk' && elem.url) {
@@ -86,20 +81,16 @@
               iframe.style.width = '100%';
               iframe.style.border = 'none';
               iframe.style.borderRadius = '8px';
-              iframe.style.margin = '20px 0';
+              iframe.style.margin = '10px 0';
               tarolo.appendChild(iframe);
             }
             else if (elem.type === 'urom_blokk') {
               const spacer = document.createElement('div');
-              spacer.style.height = (elem.meret ? elem.meret + 'px' : '20px');
+              spacer.style.height = (elem.meret ? elem.meret + 'px' : '15px');
               tarolo.appendChild(spacer);
             }
           });
         }
-      })
-      .catch(err => {
-        document.getElementById('tartalom-tarolo').innerText = 'Hiba történt a tartalom betöltése közben.';
-        console.error(err);
       });
   </script>
 </body>
